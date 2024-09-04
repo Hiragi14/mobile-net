@@ -76,7 +76,7 @@ def trainer(model, device, optim, loader_train, loader_valid, criteria, n_epochs
         accuracy = test(model, device, loader_valid)
         top1_accuracy = compare_accuracy(top1_acc=top1_accuracy, acc=accuracy)
         
-        print("Epoch %d: %5.2f %%, Top-1: %5.2f %%" % (epoch, accuracy * 100, top1_accuracy))
+        print("Epoch %d: %5.2f %%, Top-1: %5.2f %%" % (epoch, accuracy * 100, top1_accuracy * 100))
         writer.add_scalar("Test/Accuracy", accuracy, global_step=epoch)
     
     writer.close()
