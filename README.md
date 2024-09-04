@@ -38,6 +38,7 @@ MobileNetは、Googleによって導入された軽量なディープニュー�
 - numpy
 - matplotlib
 - tqdm
+- click
 
 必要なパッケージは以下のコマンドでインストールできます：
 
