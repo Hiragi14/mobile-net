@@ -1,1 +1,6 @@
 タイムスタンプ(date)	エポック(epoch)	バッチサイズ(batch size)	モデル(model)	オプティマイザ(optimizer)	学習率(lr)	損失関数(loss function)	データセット(dataset)	推論精度(accuracy)	top1
+20240904-175450	50	64	Mobile-Net	SGD	0.01	CrossEntropyLoss	CIFAR10	0.7206	0.7206
+20240904-184056	100	64	Mobile-Net	SGD	0.01	CrossEntropyLoss	CIFAR10	0.7012	0.7133
+20240904-194809	100	64	Mobile-Net	SGD	0.01	CrossEntropyLoss	CIFAR100	0.3426	0.3551
+20240904-215731	100	64	Mobile-Net	RMSprop	0.01	CrossEntropyLoss	CIFAR100	0.1169	0.145
+20240904-232523	100	64	Mobile-Net	RMSprop	0.01	CrossEntropyLoss	CIFAR100	0.2007	0.2156
