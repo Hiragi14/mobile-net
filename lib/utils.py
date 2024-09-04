@@ -16,11 +16,14 @@ def set_optim(optim_name, model, learning_rate, momentum):
     
     """
     if optim_name == "Adam":
-        optim = optim.Adam(model.parameters(), lr=learning_rate)
+        optimizer = optim.Adam(model.parameters(), lr=learning_rate)
     elif optim_name == "SGD":
-        optim = optim.SGD(model.parameters(), lr=learning_rate, momentum=momentum)
+        optimizer = optim.SGD(model.parameters(), lr=learning_rate, momentum=momentum)
+    elif optim_name == "RMSprop":
+        optimizer = optim.RMSprop(model.parameters(), lr=learning_rate)
     else:
         raise RuntimeError("optimizer is not selected")
+    return optimizer
 
 
 def set_device(gpunum=0):
@@ -41,7 +44,7 @@ def set_device(gpunum=0):
     return device
 
 
-def set_criteria(name):
+def set_lossfunction(name):
     if name == 'CrossEntropyLoss':
         criteria = nn.CrossEntropyLoss()
     elif name == 'MSELoss':
@@ -50,6 +53,7 @@ def set_criteria(name):
         criteria == nn.BCELoss()
     else:
         criteria = nn.CrossEntropyLoss()
+    return criteria
 
 
 # def tensorboad(dataset, optim):
