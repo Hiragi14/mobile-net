@@ -20,7 +20,7 @@ class DSCBlock(nn.Module):
     """
     def __init__(self, in_channels, out_channels, kernel_size=3, stride=2, padding=1, bias=None):
         super(DSCBlock, self).__init__()
-        self.depthwise_conv = nn.Conv2d(in_channels, in_channels, kernel_size=kernel_size,
+        self.depthwise_conv = nn.Conv2d(in_channels, in_channels, kernel_size=kernel_size, groups=in_channels,
                                         stride=stride, padding=padding, bias=bias)
         self.depthwise_bn = nn.BatchNorm2d(in_channels)
         
@@ -55,8 +55,10 @@ class MobileNet(nn.Module):
         super(MobileNet, self).__init__()
         self.conv = nn.Conv2d(3, 32, kernel_size=3,
                                         stride=2, padding=1, bias=None)
+        self.bn_conv = nn.BatchNorm2d(32)
+        self.relu = nn.ReLU()
         
-        self.dsconv_layers = nn.Modulelist([
+        self.dsconv_layers = nn.ModuleList([
             DSCBlock(32, 64, stride=1),
             DSCBlock(64, 128, stride=2),
             DSCBlock(128, 128, stride=1),
@@ -78,11 +80,15 @@ class MobileNet(nn.Module):
         
     def forward(self, x):
         self.input = x
+        x = self.conv(x)
+        x = self.bn_conv(x)
+        x = self.relu(x)
         
         for layer in self.dsconv_layers:
             x = layer(x)
         
         x = self.gap(x)
-        x = self.flatten(x)
+        # x = self.flatten(x)
+        x = x.view(-1, 1024)
         x = self.fc(x)
         return x
