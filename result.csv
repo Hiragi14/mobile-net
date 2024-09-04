@@ -1,0 +1,1 @@
+タイムスタンプ(date)	エポック(epoch)	バッチサイズ(batch size)	モデル(model)	オプティマイザ(optimizer)	学習率(lr)	損失関数(loss function)	データセット(dataset)	推論精度(accuracy)	top1

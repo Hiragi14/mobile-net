@@ -40,11 +40,6 @@ MobileNetは、Googleによって導入された軽量なディープニュー�
 - tqdm
 - click
 
-必要なパッケージは以下のコマンドでインストールできます：
-
-```bash
-pip install torch torchvision numpy matplotlib tqdm
-```
 
 ## インストール
 
@@ -71,6 +66,9 @@ python train.py --dataset CIFAR10 --batch-size 64 --epochs 100 --learning-rate 0
 - `--batch-size`: トレーニング時のバッチサイズ
 - `--epochs`: トレーニングエポック数
 - `--learning-rate`: 初期学習率
+- `--optimizer`: 最適化アルゴリズム
+- `--gpu`: GPUのデバイス番号
+- `--criteria`: 損失関数
 
 ### 評価
 
