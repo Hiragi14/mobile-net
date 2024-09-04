@@ -3,7 +3,7 @@ import torch
 import csv
 
 from lib.trainer import trainer
-from lib.utils import set_optim, set_device, set_criteria
+from lib.utils import set_optim, set_device, set_lossfunction
 from lib.model import MobileNet
 from lib.datadeal import dataload
 
@@ -25,18 +25,19 @@ def tensorboad(dataset, optim):
 @click.command()
 @click.option('--dataset', default='CIFAR10', help='Dataset to use for training')
 @click.option('--batch-size', default=64, help='Batch size for training')
-@click.option('--epochs', default=50, help='Number of epochs to train')
+@click.option('--epochs', default=100, help='Number of epochs to train')
 @click.option('--learning-rate', default=0.01, help='Learning rate for training')
-@click.option('--optimizer', default='SGD', help='optimizer for training')
+@click.option('--optimizer', default='RMSprop', help='optimizer for training')
 @click.option('--gpu', default=0, help='GPU device number')
-@click.option('--criteria', default='CrossEntropyLoss', help='criteria for training')
-def main(dataset, batch_size, epochs, learning_rate, optimizer, gpunumber, criteria_name):
+@click.option('--criteria_name', default='CrossEntropyLoss', help='criteria for training')
+def main(dataset, batch_size, epochs, learning_rate, optimizer, gpu, criteria_name):
     writer = tensorboad(dataset, optimizer)
-    device = set_device(gpunumber)
-    criteria = set_criteria(criteria_name)
-    model = MobileNet().to(device)
+    device = set_device(gpu)
+    criteria = set_lossfunction(criteria_name)
+    model = MobileNet(32, 32, 3, 100).to(device)
     dataloader_train, dataloader_valid = dataload(dataset, batch_size)
     optim = set_optim(optim_name=optimizer, model=model, learning_rate=learning_rate, momentum=0.01)
+    
     accuracy, top1accuracy = trainer(model=model, device=device, optim=optim,loader_train=dataloader_train,
                                     loader_valid=dataloader_valid, criteria=criteria, n_epochs=epochs, writer=writer)
     
